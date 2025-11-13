@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('leave_requests', function (Blueprint $table) {
-            $table->id();
+            $table->id('leaverequest_id');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
             $table->string('nama_izin');
             $table->date('tanggal_awal_izin');
             $table->date('tanggal_akhir_izin');
