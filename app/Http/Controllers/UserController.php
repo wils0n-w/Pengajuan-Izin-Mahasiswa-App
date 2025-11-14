@@ -11,12 +11,12 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('dashboard.index', compact('users'));
+        return view('layout.index', compact('users'));
     }
 
     public function create()
     {
-        return view('dashboard.create');
+        return view('layout.create');
     }
 
     public function store(Request $request)
@@ -37,17 +37,17 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('dashboard.index');
+        return redirect()->route('layout.index');
     }
 
     public function show(User $user)
     {
-        return view('dashboard.show', compact('user'));
+        return view('layout.show', compact('user'));
     }
 
     public function edit(User $user)
     {
-        return view('dashboard.edit', compact('user'));
+        return view('layout.edit', compact('user'));
     }
 
     public function update(Request $request, User $user)
@@ -68,12 +68,12 @@ class UserController extends Controller
 
         $user->update($data);
 
-        return redirect()->route('dashboard.index');
+        return redirect()->route('layout.index');
     }
 
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('dashboard.index');
+        return redirect()->route('layout.index');
     }
 };
