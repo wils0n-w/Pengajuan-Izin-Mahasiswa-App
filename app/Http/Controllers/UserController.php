@@ -37,17 +37,17 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('layout.index');
+        return redirect()->route('users.index');
     }
 
     public function show(User $user)
     {
-        return view('layout.show', compact('user'));
+        return view('users.show', compact('user'));
     }
 
     public function edit(User $user)
     {
-        return view('layout.edit', compact('user'));
+        return view('users.edit', compact('user'));
     }
 
     public function update(Request $request, User $user)
@@ -68,12 +68,12 @@ class UserController extends Controller
 
         $user->update($data);
 
-        return redirect()->route('layout.index');
+        return redirect()->route('users.index');
     }
 
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('layout.index');
+        return redirect()->route('users.index');
     }
 };

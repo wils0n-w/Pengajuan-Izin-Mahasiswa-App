@@ -39,17 +39,17 @@ class LeaveRequestController extends Controller
             'status_izin' => 'pending', 
         ]);
 
-        return redirect()->route('layout.index');
+        return redirect()->route('leave.index');
     }
 
     public function show(LeaveRequest $request)
     {
-        return view('layout.show', compact('request'));
+        return view('leave.show', compact('request'));
     }
 
     public function edit(LeaveRequest $request)
     {
-        return view('layout.edit', compact('request'));
+        return view('leave.edit', compact('request'));
     }
 
     public function update(Request $request, LeaveRequest $request_model)
@@ -65,12 +65,12 @@ class LeaveRequestController extends Controller
 
         $request_model->update($request->all());
 
-        return redirect()->route('layout.index');
+        return redirect()->route('leave.index');
     }
 
     public function destroy(LeaveRequest $request_model)
     {
         $request_model->delete();
-        return redirect()->route('layout.index');
+        return redirect()->route('leave.index');
     }
 }
