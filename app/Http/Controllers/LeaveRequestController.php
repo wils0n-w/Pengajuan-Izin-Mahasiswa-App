@@ -11,12 +11,12 @@ class LeaveRequestController extends Controller
     public function index()
     {
         $requests = LeaveRequest::with('user')->get();
-        return view('dashboard.index', compact('requests'));
+        return view('layout.index', compact('requests'));
     }
 
     public function create()
     {
-        return view('dashboard.create');
+        return view('layout.create');
     }
 
     public function store(Request $request)
@@ -39,17 +39,17 @@ class LeaveRequestController extends Controller
             'status_izin' => 'pending', 
         ]);
 
-        return redirect()->route('requests.index');
+        return redirect()->route('layout.index');
     }
 
     public function show(LeaveRequest $request)
     {
-        return view('dashboard.show', compact('request'));
+        return view('layout.show', compact('request'));
     }
 
     public function edit(LeaveRequest $request)
     {
-        return view('dashboard.edit', compact('request'));
+        return view('layout.edit', compact('request'));
     }
 
     public function update(Request $request, LeaveRequest $request_model)
@@ -65,12 +65,12 @@ class LeaveRequestController extends Controller
 
         $request_model->update($request->all());
 
-        return redirect()->route('requests.index');
+        return redirect()->route('layout.index');
     }
 
     public function destroy(LeaveRequest $request_model)
     {
         $request_model->delete();
-        return redirect()->route('requests.index');
+        return redirect()->route('layout.index');
     }
 }
