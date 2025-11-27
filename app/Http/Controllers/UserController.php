@@ -25,7 +25,6 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'nim' => 'required|string|max:255|unique:users,nim',
             'user' => 'required|in:student,faculty,admin',
-            'email' => 'required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
@@ -56,7 +55,6 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'nim' => 'required|string|max:255|unique:users,nim,' . $user->id,
             'user' => 'required|in:student,faculty,admin',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8|confirmed',
         ]);
 

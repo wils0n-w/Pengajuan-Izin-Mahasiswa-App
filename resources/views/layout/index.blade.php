@@ -1,14 +1,16 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Centered Rounded Dashboard Layout</title>
+    <title>Pengajuan Izin UVERS</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 font-sans">
 
-    <div class="header-container flex justify-center py-6">
+    <div class="header-container flex justify-center py-6 mb-2" >
         <header class="topbar bg-white text-gray-800 shadow-xl border border-gray-200 max-w-4xl w-full rounded-full transition duration-300 hover:shadow-2xl">
             <div class="flex items-center justify-between px-8 py-3">
                 
@@ -32,6 +34,7 @@
                 </nav>
         </div>
     </div>
+    @include('layout.create_leave')
     
 </body> 
 
