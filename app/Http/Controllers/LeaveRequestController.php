@@ -10,8 +10,8 @@ class LeaveRequestController extends Controller
 {
     public function index()
     {
-        $requests = LeaveRequest::with('user')->get();
-        return view('layout.index', compact('requests'));
+        $leaveRequests = LeaveRequest::with('user')->get();
+        return view('layout.leave_list', compact('leaveRequests'));
     }
 
     public function create()
@@ -49,7 +49,7 @@ public function store(Request $request)
         // 👇 ADDED NEW REQUIRED COLUMN
     ]);
 
-    return redirect()->route('users.index');
+    return redirect()->back();
 }
 
     public function show(LeaveRequest $request)
@@ -59,7 +59,7 @@ public function store(Request $request)
 
     public function edit(LeaveRequest $request)
     {
-        return view('layout.edit', compact('request'));
+        return view('layout.edit_leave', compact('request'));
     }
 
     public function update(Request $request, LeaveRequest $request_model)

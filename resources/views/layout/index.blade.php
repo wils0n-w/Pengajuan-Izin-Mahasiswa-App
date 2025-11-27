@@ -28,8 +28,8 @@
                 <nav>
                     <ul class="menu-list flex space-x-6">
                         <li><a href="#" class="font-medium hover:text-blue-600 transition duration-150">Settings</a></li>
-                        <li><a href="#" class="font-medium hover:text-blue-600 transition duration-150">Reports</a></li>
-                        <li><a href="{{ route('layout.create') }}" class="font-medium hover:text-blue-600 transition duration-150">Create</a></li>
+                        <li><a href="{{ route('requests.index') }}" class="font-medium hover:text-blue-600 transition duration-150">Leave Request List</a></li>
+                        <li><a href="{{ route('users.create') }}" class="font-medium hover:text-blue-600 transition duration-150">Create</a></li>
                     </ul>
                 </nav>
         </div>
