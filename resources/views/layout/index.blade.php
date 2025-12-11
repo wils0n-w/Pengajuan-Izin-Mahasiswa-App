@@ -10,7 +10,7 @@
 </head>
 <body class="bg-gray-100 font-sans">
 
-    <div class="header-container flex justify-center py-6 mb-2" >
+    <!-- <div class="header-container flex justify-center py-6 mb-2" >
         <header class="topbar bg-white text-gray-800 shadow-xl border border-gray-200 max-w-4xl w-full rounded-full transition duration-300 hover:shadow-2xl">
             <div class="flex items-center justify-between px-8 py-3">
                 
@@ -33,7 +33,7 @@
                     </ul>
                 </nav>
         </div>
-    </div>
+    </div> -->
     @include('layout.create_leave')
     
 </body> 

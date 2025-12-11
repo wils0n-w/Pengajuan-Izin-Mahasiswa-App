@@ -33,23 +33,22 @@ public function store(Request $request)
         'alasan_izin' => 'required|string',
     ]);
 
-    // 💡 Fetch the user's name from the logged-in user
-    $namaMahasiswa = Auth::user()->nama_mahasiswa ?? 'Unknown'; 
-    // You should ensure the user object has a 'nama_mahasiswa' field.
-    
-    LeaveRequest::create([
-        'nama_mahasiswa' => $request->nama_mahasiswa,
-        'nim' => $request->nim,
-        'nama_izin' => $request->nama_izin,
-        'tanggal_awal_izin' => $request->tanggal_awal_izin,
-        'tanggal_akhir_izin' => $request->tanggal_akhir_izin,
-        'jenis_izin' => $request->jenis_izin,
-        'alasan_izin' => $request->alasan_izin,
-        'status_izin' => 'pending', 
-        // 👇 ADDED NEW REQUIRED COLUMN
-    ]);
+    try {
+        LeaveRequest::create([
+            'nama_mahasiswa' => $request->nama_mahasiswa,
+            'nim' => $request->nim,
+            'nama_izin' => $request->nama_izin,
+            'tanggal_awal_izin' => $request->tanggal_awal_izin,
+            'tanggal_akhir_izin' => $request->tanggal_akhir_izin,
+            'jenis_izin' => $request->jenis_izin,
+            'alasan_izin' => $request->alasan_izin,
+            'status_izin' => 'pending',
+        ]);
 
-    return redirect()->back();
+        return redirect()->back()->with('success', 'Permintaan izin berhasil diajukan!');
+    } catch (\Exception $e) {
+        return redirect()->back()->with('error', 'Gagal mengajukan permintaan izin. Silakan coba lagi.');
+    }
 }
 
     public function show(LeaveRequest $request)
@@ -62,9 +61,9 @@ public function store(Request $request)
         return view('layout.edit_leave', compact('request'));
     }
 
-    public function update(Request $request, LeaveRequest $request_model)
+    public function update(Request $formData, LeaveRequest $request)
     {
-        $request->validate([
+        $validated = $formData->validate([
             'nama_mahasiswa' => 'required|string|max:255',
             'nama_izin' => 'nullable|string|max:255',
             'nim' => 'required|string|max:10',
@@ -72,17 +71,30 @@ public function store(Request $request)
             'tanggal_akhir_izin' => 'required|date|after_or_equal:tanggal_awal_izin',
             'jenis_izin' => 'required|in:sakit,izin,other',
             'alasan_izin' => 'required|string',
-            'status_izin' => 'required|in:pending,approved,rejected', 
+            'status_izin' => 'required|in:pending,approved,rejected',
         ]);
 
-        $request_model->update($request->all());
+        $request->update($validated);
 
-        return redirect()->route('users.index');
+        return redirect()->route('requests.index')->with('success', 'Permintaan izin berhasil diperbarui.');
     }
 
-    public function destroy(LeaveRequest $request_model)
+    public function destroy(LeaveRequest $request)
     {
-        $request_model->delete();
-        return redirect()->route('layout.index');
+        $request->delete();
+        return redirect()->route('requests.index')->with('success', 'Permintaan izin berhasil dihapus.');
+    }
+
+    public function updateStatus(Request $formData, LeaveRequest $request)
+    {
+        $formData->validate([
+            'status_izin' => 'required|in:approved,rejected',
+        ]);
+    
+        $request->update([
+            'status_izin' => $formData->status_izin,
+        ]);
+    
+        return redirect()->route('requests.index')->with('success', 'Status permintaan izin berhasil diperbarui.');
     }
 }

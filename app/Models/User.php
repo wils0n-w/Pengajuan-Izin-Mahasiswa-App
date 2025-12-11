@@ -3,33 +3,30 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Relations\HasMany;
  
-
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
-    protected $primaryKey = 'user_id';
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-    public function LeaveRequest(): HasMany
+    public function canAccessPanel(Panel $panel): bool
     {
-        return $this->hasMany(LeaveRequest::class);
+        return $this->role === 'admin' || $this->role === 'faculty';
     }
-
-
-
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var list<string>
+     * @var array<int, string>
      */
     protected $fillable = [
-        'user',
+        'name',
+        'email',
+        'role',
         'password',
     ];
     

@@ -8,14 +8,38 @@
 </head>
 <body class="bg-gray-100 p-8">
 
-<div class="max-w-7xl mx-auto bg-white p-6 rounded-lg shadow-xl">
+     <div class="header-container flex justify-center py-6 mb-2" >
+        <header class="topbar bg-white text-gray-800 shadow-xl border border-gray-200 max-w-4xl w-full rounded-full transition duration-300 hover:shadow-2xl">
+            <div class="flex items-center justify-between px-8 py-3">
+                
+                <nav>
+                    <ul class="menu-list flex space-x-6">
+                        <li><a href="#" class="font-medium hover:text-blue-600 transition duration-150">Home</a></li>
+                        <li><a href="#" class="font-medium hover:text-blue-600 transition duration-150">Profile</a></li>
+                    </ul>
+                </nav>
+
+                <div class="logo text-xl font-extrabold text-blue-600 tracking-wide bg-gray-50 px-4 py-1 rounded-full border border-blue-100 shadow-inner">
+                    LOGO
+                </div>
+                
+                <nav>
+                    <ul class="menu-list flex space-x-6">
+                        <li><a href="#" class="font-medium hover:text-blue-600 transition duration-150">Settings</a></li>
+                        <li><a href="{{ route('requests.index') }}" class="font-medium hover:text-blue-600 transition duration-150">Leave Request List</a></li>
+                        <li><a href="{{ route('users.create') }}" class="font-medium hover:text-blue-600 transition duration-150">Create</a></li>
+                    </ul>
+                </nav>
+        </div>
+    </div>
+<div class="max-w-8xl mx-auto bg-white p-6 rounded-lg shadow-xl">
     <h1 class="text-3xl font-bold mb-6 text-gray-800 border-b pb-2">📋 Daftar Permintaan Izin Mahasiswa</h1>
 
     @if($leaveRequests->isEmpty())
         <p class="text-gray-500 italic">Belum ada permintaan izin yang tersedia.</p>
     @else
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
+        <div>
+            <table class="w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No.</th>
@@ -34,10 +58,10 @@
                 <tbody class="bg-white divide-y divide-gray-200">
                     @foreach ($leaveRequests as $key => $request)
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $key + 1 }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">{{ $request->nama_mahasiswa }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $request->nim }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="px-6 py-4">{{ $key + 1 }}</td>
+                            <td class="px-6 py-4 font-medium text-gray-900">{{ $request->nama_mahasiswa }}</td>
+                            <td class="px-6 py-4">{{ $request->nim }}</td>
+                            <td class="px-6 py-4">
                                 <span class="
                                     @if($request->jenis_izin == 'sakit') bg-yellow-100 text-yellow-800
                                     @elseif($request->jenis_izin == 'izin') bg-blue-100 text-blue-800
@@ -47,15 +71,15 @@
                                     {{ $request->jenis_izin }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <td class="px-6 py-4 text-sm text-gray-500">
                                 {{ $request->nama_izin ?? '-' }}
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ \Carbon\Carbon::parse($request->tanggal_awal_izin)->format('d/m/Y') }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ \Carbon\Carbon::parse($request->tanggal_akhir_izin)->format('d/m/Y') }}</td>
+                            <td class="px-6 py-4">{{ \Carbon\Carbon::parse($request->tanggal_awal_izin)->format('d/m/Y') }}</td>
+                            <td class="px-6 py-4">{{ \Carbon\Carbon::parse($request->tanggal_akhir_izin)->format('d/m/Y') }}</td>
                             <td class="px-6 py-4 max-w-xs text-sm text-gray-500 overflow-hidden truncate" title="{{ $request->alasan_izin }}">
                                 {{ \Illuminate\Support\Str::limit($request->alasan_izin, 50) }}
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
+                            <td class="px-6 py-4">
                                 <span class="
                                     @if($request->status_izin == 'pending') bg-orange-100 text-orange-800
                                     @elseif($request->status_izin == 'approved') bg-green-100 text-green-800
@@ -65,7 +89,7 @@
                                     {{ $request->status_izin }}
                                 </span>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            <td class="px-6 py-4 text-sm text-gray-500">
                                 {{ $request->created_at->format('d/m/Y H:i') }}
                             </td>
                             
@@ -85,18 +109,26 @@
                                         <button type="submit" class="text-red-600 hover:text-red-900 text-xs font-semibold">Delete</button>
                                     </form>
 
-                                    {{-- APPROVE/DENY FORM/BUTTON (Custom Action) --}}
-                                    <form action="{{ route('requests.update_status', $request->id) }}" method="POST">
-                                        @csrf
-                                        @method('PUT')
-                                        <input type="hidden" name="status_izin" value="{{ $request->status_izin == 'approved' ? 'rejected' : 'approved' }}">
-                                        
-                                        @if($request->status_izin == 'approved')
-                                            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded text-xs">Deny</button>
-                                        @else
-                                            <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded text-xs">Approve</button>
-                                        @endif
-                                    </form>
+                                    {{-- APPROVE/DENY FORMS --}}
+                                    @if($request->status_izin == 'pending')
+                                        <div class="flex flex-col space-y-2">
+                                            {{-- Approve Form --}}
+                                            <form action="{{ route('requests.update_status', ['request' => $request->id]) }}" method="POST" class="inline">
+                                                @csrf
+                                                @method('PUT')
+                                                <input type="hidden" name="status_izin" value="approved">
+                                                <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded text-xs w-full">Approve</button>
+                                            </form>
+
+                                            {{-- Reject Form --}}
+                                            <form action="{{ route('requests.update_status', ['request' => $request->id]) }}" method="POST" class="inline">
+                                                @csrf
+                                                @method('PUT')
+                                                <input type="hidden" name="status_izin" value="rejected">
+                                                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded text-xs w-full">Reject</button>
+                                            </form>
+                                        </div>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
