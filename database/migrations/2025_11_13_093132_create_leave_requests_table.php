@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('leave_requests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->date('start_date');
-            $table->date('end_date');
-            $table->text('reason');
-            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->string('nama_mahasiswa');
+            $table->string('nim');
+            $table->string('nama_izin')->nullable();
+            $table->date('tanggal_awal_izin');
+            $table->date('tanggal_akhir_izin');
+            $table->string('jenis_izin');
+            $table->text('alasan_izin');
+            $table->string('status_izin')->default('pending');
             $table->timestamps();
         });
     }

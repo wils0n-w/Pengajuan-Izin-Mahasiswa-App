@@ -10,13 +10,13 @@ class LeaveRequestController extends Controller
 {
     public function index()
     {
-        $leaveRequests = LeaveRequest::with('user')->get();
+        $leaveRequests = LeaveRequest::all();
         return view('layout.leave_list', compact('leaveRequests'));
     }
 
     public function create()
     {
-        return view('layout.create_leave');
+        return view('layout.create');
     }
 
     // In app/Http/Controllers/LeaveRequestController.php

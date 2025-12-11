@@ -2,23 +2,24 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class LeaveRequest extends Model
 {  
+    use HasFactory;
+    
     protected $fillable = [
-        'user_id',
-        'start_date',
-        'end_date',
-        'reason',
-        'status',
+        'nama_mahasiswa',
+        'nim',
+        'nama_izin',
+        'tanggal_awal_izin',
+        'tanggal_akhir_izin',
+        'jenis_izin',
+        'alasan_izin',
+        'status_izin',
     ];
     
     protected $table = 'leave_requests';
 
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
-    
 }
