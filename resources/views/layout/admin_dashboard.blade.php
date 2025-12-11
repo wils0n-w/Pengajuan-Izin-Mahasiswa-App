@@ -6,32 +6,60 @@
     <title>Admin Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 p-8">
+<body class="bg-gray-100 font-sans antialiased min-h-screen flex flex-col">
 
-    <div class="header-container flex justify-center py-6 mb-2">
-        <header class="topbar bg-white text-gray-800 shadow-xl border border-gray-200 max-w-4xl w-full rounded-full transition duration-300 hover:shadow-2xl">
-            <div class="flex items-center justify-between px-8 py-3">
-                <nav>
-                    <ul class="menu-list flex space-x-6">
-                        <li><a href="{{ route('requests.index') }}" class="font-medium hover:text-blue-600 transition duration-150">Leave Request List</a></li>
-                        <li><a href="{{ route('users.create') }}" class="font-medium hover:text-blue-600 transition duration-150">Create</a></li>
-                    </ul>
-                </nav>
+    <nav class="bg-gray-800 text-white p-4 shadow-lg fixed w-full z-10 top-0">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="{{ route('admin.dashboard') }}" class="text-xl font-bold tracking-wide hover:text-gray-300 transition-colors">Admin Panel</a>
+            <div class="flex items-center space-x-6">
+                @if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Faculty')
+                    <a href="{{ route('requests.index') }}" class="hover:text-gray-300 transition-colors">Leave Requests</a>
+                @endif
+                @if (Auth::user()->role == 'Admin')
+                    <a href="{{ route('users.create') }}" class="hover:text-gray-300 transition-colors">Create User</a>
+                @endif
+                <form method="POST" action="{{ route('logout') }}" class="inline">
+                    @csrf
+                    <button type="submit" class="px-3 py-1 bg-red-600 rounded-md hover:bg-red-700 transition-colors">Log Out</button>
+                </form>
             </div>
-        </header>
-    </div>
-
-    <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-xl mt-10">
-        <h1 class="text-3xl font-bold mb-6 text-gray-800 border-b pb-2">Admin Dashboard</h1>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-            <a href="{{ route('requests.index') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg text-center transition duration-300">
-                Leave Request List
-            </a>
-            <a href="{{ route('users.create') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-4 px-6 rounded-lg text-center transition duration-300">
-                Create User
-            </a>
         </div>
-    </div>
+    </nav>
+
+    <main class="flex-grow pt-20 p-8">
+        <div class="max-w-7xl mx-auto bg-white p-8 rounded-lg shadow-xl">
+            <h1 class="text-4xl font-extrabold text-gray-800 mb-8 border-b-4 border-indigo-500 pb-4">Welcome to the Admin Dashboard</h1>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
+                @if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Faculty')
+                <!-- Card for Leave Requests -->
+                <a href="{{ route('requests.index') }}" class="block p-6 bg-blue-500 text-white rounded-lg shadow-md hover:shadow-xl hover:bg-blue-600 transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-2xl font-bold">Manage Leave Requests</h2>
+                        <svg class="w-8 h-8 opacity-75" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <p class="text-gray-200">View, approve, or reject pending leave applications.</p>
+                </a>
+                @endif
+
+                <!-- Card for User Management -->
+                @if (Auth::user()->role == 'Admin')
+                <a href="{{ route('users.create') }}" class="block p-6 bg-green-500 text-white rounded-lg shadow-md hover:shadow-xl hover:bg-green-600 transition-all duration-300 transform hover:-translate-y-1">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-2xl font-bold">Create New User</h2>
+                        <svg class="w-8 h-8 opacity-75" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </div>
+                    <p class="text-gray-200">Add new users or manage existing user accounts.</p>
+                </a>
+                @endif
+
+            </div>
+        </div>
+    </main>
 
 </body>
 </html>

@@ -34,7 +34,7 @@
                 </nav>
         </div>
     </div> -->
-    @include('layout.create_leave')
+    @include('layout.admin_dashboard')
     
 </body> 
 
