@@ -12,10 +12,10 @@
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <a href="{{ route('admin.dashboard') }}" class="text-xl font-bold tracking-wide hover:text-gray-300 transition-colors">Admin Panel</a>
             <div class="flex items-center space-x-6">
-                @if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Faculty')
+                @if (Auth::check() && (Auth::user()->role == 'Admin' || Auth::user()->role == 'Faculty'))
                     <a href="{{ route('requests.index') }}" class="hover:text-gray-300 transition-colors">Leave Requests</a>
                 @endif
-                @if (Auth::user()->role == 'Admin')
+                @if (Auth::check() && Auth::user()->role == 'Admin')
                     <a href="{{ route('users.create') }}" class="hover:text-gray-300 transition-colors">Create User</a>
                 @endif
                 <form method="POST" action="{{ route('logout') }}" class="inline">
@@ -31,7 +31,7 @@
             <h1 class="text-4xl font-extrabold text-gray-800 mb-8 border-b-4 border-indigo-500 pb-4">Welcome to the Admin Dashboard</h1>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
-                @if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Faculty')
+                @if (Auth::check() && (Auth::user()->role == 'Admin' || Auth::user()->role == 'Faculty'))
                 <!-- Card for Leave Requests -->
                 <a href="{{ route('requests.index') }}" class="block p-6 bg-blue-500 text-white rounded-lg shadow-md hover:shadow-xl hover:bg-blue-600 transition-all duration-300 transform hover:-translate-y-1">
                     <div class="flex items-center justify-between mb-4">
@@ -45,7 +45,7 @@
                 @endif
 
                 <!-- Card for User Management -->
-                @if (Auth::user()->role == 'Admin')
+                @if (Auth::check() && Auth::user()->role == 'Admin')
                 <a href="{{ route('users.create') }}" class="block p-6 bg-green-500 text-white rounded-lg shadow-md hover:shadow-xl hover:bg-green-600 transition-all duration-300 transform hover:-translate-y-1">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="text-2xl font-bold">Create New User</h2>

@@ -15,7 +15,24 @@
         }
     </style>
 </head>
-<body>
+<body class="bg-gray-100 font-sans antialiased min-h-screen flex flex-col pt-20">
+
+    <nav class="bg-gray-800 text-white p-4 shadow-lg fixed w-full z-10 top-0">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="{{ route('admin.dashboard') }}" class="text-xl font-bold tracking-wide hover:text-gray-300 transition-colors">Admin Panel</a>
+            <div class="flex items-center space-x-6">
+                <a href="{{ route('requests.index') }}" class="hover:text-gray-300 transition-colors">Leave Requests</a>
+                @if (Auth::user()->isAdmin())
+                    <a href="{{ route('users.create') }}" class="hover:text-gray-300 transition-colors">Create User</a>
+                @endif
+                <form method="POST" action="{{ route('logout') }}" class="inline">
+                    @csrf
+                    <button type="submit" class="px-3 py-1 bg-red-600 rounded-md hover:bg-red-700 transition-colors">Log Out</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
     <div class="h-fit flex items-center justify-center p-4 mt-8">
         <div class="w-full max-w-2xl bg-white p-8 md:p-10 shadow-xl rounded-xl">
             <h1 class="text-3xl font-bold text-gray-800 mb-6 border-b pb-2">Create New User</h1>
@@ -72,15 +89,15 @@
 
                 <!-- User Type -->
                 <div class="mb-5">
-                    <label for="user" class="block text-sm font-medium text-gray-700 mb-1">User Type <span class="text-red-500">*</span></label>
-                    <select id="user" name="user" required
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:ring-indigo-500 focus:border-indigo-500 @error('user') border-red-500 @enderror">
-                        <option value="" disabled {{ old('user') == null ? 'selected' : '' }}>Select user type</option>
-                        <option value="student" {{ old('user') == 'student' ? 'selected' : '' }}>Student</option>
-                        <option value="faculty" {{ old('user') == 'faculty' ? 'selected' : '' }}>Faculty</option>
-                        <option value="admin" {{ old('user') == 'admin' ? 'selected' : '' }}>Admin</option>
+                    <label for="role" class="block text-sm font-medium text-gray-700 mb-1">User Type <span class="text-red-500">*</span></label>
+                    <select id="role" name="role" required
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white focus:ring-indigo-500 focus:border-indigo-500 @error('role') border-red-500 @enderror">
+                        <option value="" disabled {{ old('role') == null ? 'selected' : '' }}>Select user type</option>
+                        <option value="student" {{ old('role') == 'student' ? 'selected' : '' }}>Student</option>
+                        <option value="faculty" {{ old('role') == 'faculty' ? 'selected' : '' }}>Faculty</option>
+                        <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
                     </select>
-                    @error('user')
+                    @error('role')
                         <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
                     @enderror
                 </div>

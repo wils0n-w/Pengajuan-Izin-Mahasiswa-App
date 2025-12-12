@@ -26,6 +26,7 @@ public function store(Request $request)
     $request->validate([
         'nama_mahasiswa' => 'required|string|max:255',
         'nim' => 'required|string|max:10',
+        'phone_number' => 'nullable|string|max:20',
         'nama_izin' => 'nullable|string|max:255',
         'tanggal_awal_izin' => 'required|date',
         'tanggal_akhir_izin' => 'required|date|after_or_equal:tanggal_awal_izin',
@@ -37,6 +38,7 @@ public function store(Request $request)
         LeaveRequest::create([
             'nama_mahasiswa' => $request->nama_mahasiswa,
             'nim' => $request->nim,
+            'phone_number' => $request->phone_number,
             'nama_izin' => $request->nama_izin,
             'tanggal_awal_izin' => $request->tanggal_awal_izin,
             'tanggal_akhir_izin' => $request->tanggal_akhir_izin,
@@ -45,9 +47,9 @@ public function store(Request $request)
             'status_izin' => 'pending',
         ]);
 
-        return redirect()->back()->with('success', 'Permintaan izin berhasil diajukan!');
+        return redirect('/')->with('success', 'Permintaan izin berhasil diajukan!');
     } catch (\Exception $e) {
-        return redirect()->back()->with('error', 'Gagal mengajukan permintaan izin. Silakan coba lagi.');
+        return redirect('/')->with('error', 'Gagal mengajukan permintaan izin. Silakan coba lagi.');
     }
 }
 
@@ -67,6 +69,7 @@ public function store(Request $request)
             'nama_mahasiswa' => 'required|string|max:255',
             'nama_izin' => 'nullable|string|max:255',
             'nim' => 'required|string|max:10',
+            'phone_number' => 'nullable|string|max:20',
             'tanggal_awal_izin' => 'required|date',
             'tanggal_akhir_izin' => 'required|date|after_or_equal:tanggal_awal_izin',
             'jenis_izin' => 'required|in:sakit,izin,other',

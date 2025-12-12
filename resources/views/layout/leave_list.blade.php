@@ -6,7 +6,23 @@
     <title>Daftar Permintaan Izin</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 p-8">
+<body class="bg-gray-100 font-sans antialiased min-h-screen flex flex-col pt-20">
+
+    <nav class="bg-gray-800 text-white p-4 shadow-lg fixed w-full z-10 top-0">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="{{ route('admin.dashboard') }}" class="text-xl font-bold tracking-wide hover:text-gray-300 transition-colors">Admin Panel</a>
+            <div class="flex items-center space-x-6">
+                <a href="{{ route('requests.index') }}" class="hover:text-gray-300 transition-colors">Leave Requests</a>
+                @if (Auth::user()->isAdmin())
+                    <a href="{{ route('users.create') }}" class="hover:text-gray-300 transition-colors">Create User</a>
+                @endif
+                <form method="POST" action="{{ route('logout') }}" class="inline">
+                    @csrf
+                    <button type="submit" class="px-3 py-1 bg-red-600 rounded-md hover:bg-red-700 transition-colors">Log Out</button>
+                </form>
+            </div>
+        </div>
+    </nav>
 
 
 <div class="max-w-8xl mx-auto bg-white p-6 rounded-lg shadow-xl">
@@ -22,6 +38,7 @@
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No.</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Mahasiswa</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NIM</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No. HP</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jenis Izin</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Izin Khusus</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal Awal</th>
@@ -38,6 +55,9 @@
                             <td class="px-6 py-4">{{ $key + 1 }}</td>
                             <td class="px-6 py-4 font-medium text-gray-900">{{ $request->nama_mahasiswa }}</td>
                             <td class="px-6 py-4">{{ $request->nim }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-500">
+                                {{ $request->phone_number ?? '-' }}
+                            </td>
                             <td class="px-6 py-4">
                                 <span class="
                                     @if($request->jenis_izin == 'sakit') bg-yellow-100 text-yellow-800

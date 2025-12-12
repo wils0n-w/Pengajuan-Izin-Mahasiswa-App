@@ -17,7 +17,18 @@
 </head>
 <body>
     <div class="h-fit flex items-center justify-center p-4 mt-8">
-        <div class="w-full max-w-2xl bg-white p-8 md:p-10 shadow-xl rounded-xl">
+        <div class="w-full max-w-2xl bg-white p-8 md:p-10 shadow-xl rounded-xl relative">
+                <div class="absolute top-4 right-4">
+                    @auth
+                        <a href="{{ route('admin.dashboard') }}"
+                           class="inline-flex items-center p-2 rounded-full bg-indigo-600 text-white hover:bg-indigo-700 transition duration-150 ease-in-out shadow-md"
+                           title="Go to Admin Dashboard">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.827 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.827 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.827-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.827-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                        </a>
+                    @endauth
+                </div>
             <h1 class="text-3xl font-bold text-gray-800 mb-6 border-b pb-2">Form Permintaan Izin</h1>
 
             <!-- Session Status -->
@@ -90,6 +101,17 @@
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 @error('nim') border-red-500 @enderror"
                            placeholder="Masukkan Nomor Induk Mahasiswa Anda">
                     @error('nim')
+                        <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Phone Number (Required) -->
+                <div class="mb-5">
+                    <label for="phone_number" class="block text-sm font-medium text-gray-700 mb-1">No. HP WhatsApp <span class="text-red-500">*</span></label>
+                    <input type="text" id="phone_number" name="phone_number" value="{{ old('phone_number') }}" required
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 @error('phone_number') border-red-500 @enderror"
+                           placeholder="Contoh: 081234567890">
+                    @error('phone_number')
                         <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p>
                     @enderror
                 </div>

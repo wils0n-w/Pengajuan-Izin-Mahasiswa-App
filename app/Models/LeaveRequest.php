@@ -12,6 +12,7 @@ class LeaveRequest extends Model
     protected $fillable = [
         'nama_mahasiswa',
         'nim',
+        'phone_number',
         'nama_izin',
         'tanggal_awal_izin',
         'tanggal_akhir_izin',
