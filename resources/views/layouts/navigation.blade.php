@@ -5,9 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('admin.dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
-                    </a>
+
                 </div>
 
                 <!-- Navigation Links -->
@@ -15,14 +13,14 @@
                     <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    @if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Faculty')
+                    @if (Auth::user()->isAdmin() || Auth::user()->isFaculty())
                         <x-nav-link :href="route('requests.index')" :active="request()->routeIs('requests.index')">
                             {{ __('Manage Leave Requests') }}
                         </x-nav-link>
                     @endif
-                    @if (Auth::user()->role == 'Admin')
+                    @if (Auth::user()->isAdmin())
                         <x-nav-link :href="route('users.create')" :active="request()->routeIs('users.create')">
-                            {{ __('Create New User') }}
+                                                        {{ __('Create new Faculty Member') }}
                         </x-nav-link>
                     @endif
                 </div>
@@ -60,6 +58,13 @@
                         </form>
                     </x-slot>
                 </x-dropdown>
+                {{-- Direct Logout Button --}}
+                <form method="POST" action="{{ route('logout') }}" class="inline-flex ms-3">
+                    @csrf
+                    <button type="submit" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                        {{ __('Log Out') }}
+                    </button>
+                </form>
             </div>
 
             <!-- Hamburger -->
@@ -80,14 +85,14 @@
             <x-responsive-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            @if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Faculty')
+            @if (Auth::user()->isAdmin() || Auth::user()->isFaculty())
                 <x-responsive-nav-link :href="route('requests.index')" :active="request()->routeIs('requests.index')">
                     {{ __('Manage Leave Requests') }}
                 </x-responsive-nav-link>
             @endif
-            @if (Auth::user()->role == 'Admin')
+            @if (Auth::user()->isAdmin())
                 <x-responsive-nav-link :href="route('users.create')" :active="request()->routeIs('users.create')">
-                    {{ __('Create New User') }}
+                                                {{ __('Create new Faculty Member') }}
                 </x-responsive-nav-link>
             @endif
         </div>

@@ -28,6 +28,13 @@
                             </svg>
                         </a>
                     @endauth
+                    @guest
+                        <a href="{{ route('login') }}"
+                           class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150"
+                           title="Login to Admin Panel">
+                            Login
+                        </a>
+                    @endguest
                 </div>
             <h1 class="text-3xl font-bold text-gray-800 mb-6 border-b pb-2">Form Permintaan Izin</h1>
 

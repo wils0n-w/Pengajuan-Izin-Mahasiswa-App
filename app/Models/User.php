@@ -63,9 +63,5 @@ class User extends Authenticatable
         return $this->role === 'faculty';
     }
 
-    public function isStudent()
-    {
-        return $this->role === 'student';
-    }
 
 }

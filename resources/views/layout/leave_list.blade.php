@@ -6,33 +6,18 @@
     <title>Daftar Permintaan Izin</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 font-sans antialiased min-h-screen flex flex-col pt-20">
+<body class="bg-gray-100 font-sans antialiased min-h-screen flex flex-col">
 
-    <nav class="bg-gray-800 text-white p-4 shadow-lg fixed w-full z-10 top-0">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="{{ route('admin.dashboard') }}" class="text-xl font-bold tracking-wide hover:text-gray-300 transition-colors">Admin Panel</a>
-            <div class="flex items-center space-x-6">
-                <a href="{{ route('requests.index') }}" class="hover:text-gray-300 transition-colors">Leave Requests</a>
-                @if (Auth::user()->isAdmin())
-                    <a href="{{ route('users.create') }}" class="hover:text-gray-300 transition-colors">Create User</a>
-                @endif
-                <form method="POST" action="{{ route('logout') }}" class="inline">
-                    @csrf
-                    <button type="submit" class="px-3 py-1 bg-red-600 rounded-md hover:bg-red-700 transition-colors">Log Out</button>
-                </form>
-            </div>
-        </div>
-    </nav>
+    @include('layouts.navigation')
 
-
-<div class="max-w-8xl mx-auto bg-white p-6 rounded-lg shadow-xl">
+<div class="w-full mx-auto bg-white p-4 sm:p-6 pt-20 rounded-lg shadow-xl">
     <h1 class="text-3xl font-bold mb-6 text-gray-800 border-b pb-2">📋 Daftar Permintaan Izin Mahasiswa</h1>
 
     @if($leaveRequests->isEmpty())
         <p class="text-gray-500 italic">Belum ada permintaan izin yang tersedia.</p>
     @else
-        <div>
-            <table class="w-full divide-y divide-gray-200">
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">No.</th>
@@ -91,7 +76,7 @@
                             </td>
                             
                             {{-- ACTIONS COLUMN --}}
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <td class="px-6 py-4 text-sm font-medium">
                                 <div class="flex flex-col space-y-2">
                                     {{-- SHOW/VIEW BUTTON --}}
                                     <a href="{{ route('requests.show', $request->id) }}" class="text-indigo-600 hover:text-indigo-900 text-xs font-semibold">View</a>
