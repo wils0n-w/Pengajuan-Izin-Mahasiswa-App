@@ -1,59 +1,143 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Student Leave Request Application
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A web application built with Laravel for managing student leave requests. This application allows students to submit leave requests, and faculty or administrators to approve or reject them.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   **User Authentication**: Secure login and registration for students, faculty, and administrators.
+-   **Role-Based Access Control**: Different permissions for Admin, Faculty, and Student roles.
+-   **Leave Request Management**: Create, view, update, and delete leave requests.
+-   **Request Approval Workflow**: Admins and Faculty can approve or reject pending requests.
+-   **User Management**: Admins can create and manage faculty accounts.
+-   **Profile Management**: Users can update their profile information.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## User Roles
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+There are three user roles in this application:
 
-## Learning Laravel
+-   **Admin**: Has full control over the application. Can manage users, and all leave requests.
+-   **Faculty**: Can view and manage leave requests submitted by students.
+-   **Student**: Can create and manage their own leave requests. (Students can register for an account).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## Prerequisites
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Before you begin, ensure you have the following installed on your local machine:
 
-## Laravel Sponsors
+-   PHP (>= 8.1)
+-   Composer
+-   Node.js & npm
+-   A database server (e.g., MySQL, PostgreSQL)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Installation and Setup
 
-### Premium Partners
+Follow these steps to get the application up and running on your local machine.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/your-username/Pengajuan-Izin-Mahasiswa-App.git
+    cd Pengajuan-Izin-Mahasiswa-App
+    ```
 
-## Contributing
+2.  **Install dependencies:**
+    ```bash
+    composer install
+    npm install
+    ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+3.  **Set up your environment file:**
+    
+    Create a `.env` file by copying the `.env.example` file. If `.env.example` does not exist, create a new `.env` file.
+    ```bash
+    cp .env.example .env
+    ```
+    *Note: If `.env.example` does not exist, you can create a new `.env` file and fill it with the necessary configuration based on the `config/*.php` files.*
 
-## Code of Conduct
+4.  **Generate an application key:**
+    ```bash
+    php artisan key:generate
+    ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+5.  **Configure your database:**
+    
+    Open the `.env` file and update the database connection details:
+    ```
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=your_database_name
+    DB_USERNAME=your_database_user
+    DB_PASSWORD=your_database_password
+    ```
 
-## Security Vulnerabilities
+6.  **Run database migrations:**
+    ```bash
+    php artisan migrate
+    ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+7.  **Seed the database:**
+    
+    This will create the default admin and faculty users.
+    ```bash
+    php artisan db:seed
+    ```
 
-## License
+8.  **Start the development servers:**
+    
+    You need to run two commands in separate terminal windows.
+    ```bash
+    # Terminal 1: Start the PHP server
+    php artisan serve
+    
+    # Terminal 2: Start the Vite development server for frontend assets
+    npm run dev
+    ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    The application should now be accessible at `http://localhost:8000`.
+
+## Usage
+
+### Default Login Credentials
+
+The database seeder creates the following users with a default password of `password`:
+
+-   **Admin**:
+    -   **Email**: `admin@gmail.com`
+    -   **Password**: `password`
+-   **Faculty**:
+    -   **Email**: `fakultas@gmail.com`
+    -   **Password**: `password`
+
+### Student Registration
+
+Students can register for a new account by navigating to the registration page and filling out the required information.
+
+### Creating a Leave Request (as a Student)
+
+1.  Log in with a student account.
+2.  Navigate to the dashboard.
+3.  Click on the "Create Leave Request" button.
+4.  Fill out the form with the details of the leave and submit.
+5.  You can view the status of your request on your dashboard.
+
+<!-- ![Student Dashboard Screenshot](path/to/student_dashboard_screenshot.png) -->
+*Placeholder for Student Dashboard Screenshot*
+
+### Managing Leave Requests (as Admin/Faculty)
+
+1.  Log in with an Admin or Faculty account.
+2.  Navigate to the "Manage Leave Requests" section.
+3.  Here you can view all pending requests.
+4.  You can approve or reject requests. The student will be notified of the status change.
+
+<!-- ![Admin Dashboard Screenshot](path/to/admin_dashboard_screenshot.png) -->
+*Placeholder for Admin Dashboard Screenshot*
+
+### Creating a new Faculty Member (as Admin)
+
+1.  Log in as an Admin.
+2.  Navigate to the "Create new Faculty Member" section.
+3.  Fill in the faculty member's details and create the account.
+
+---
+
+This README provides a comprehensive guide for setting up and using the Student Leave Request Application.
