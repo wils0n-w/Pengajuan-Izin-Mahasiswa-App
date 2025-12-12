@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Admin Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-gray-100 font-sans antialiased min-h-screen flex flex-col">
 
@@ -43,14 +50,14 @@
 
                 @if (Auth::check() && (Auth::user()->isAdmin() || Auth::user()->isFaculty()))
                 <!-- Card for Profile -->
-                <a href="{{ route('profile.edit') }}" class="block p-6 bg-purple-500 text-white rounded-lg shadow-md hover:shadow-xl hover:bg-purple-600 transition-all duration-300 transform hover:-translate-y-1">
+                <a href="{{ route('profile.edit') }}" class="block p-6 bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-xl hover:bg-gray-50 transition-all duration-300 transform hover:-translate-y-1">
                     <div class="flex items-center justify-between mb-4">
-                        <h2 class="text-2xl font-bold">View Profile</h2>
-                        <svg class="w-8 h-8 opacity-75" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <h2 class="text-2xl font-bold text-gray-800">View Profile</h2>
+                        <svg class="w-8 h-8 opacity-75 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                         </svg>
                     </div>
-                    <p class="text-gray-200">View and update your personal profile information.</p>
+                    <p class="text-gray-600">View and update your personal profile information.</p>
                 </a>
                 @endif
 

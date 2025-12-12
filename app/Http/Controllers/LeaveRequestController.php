@@ -98,6 +98,24 @@ public function store(Request $request)
             'status_izin' => $formData->status_izin,
         ]);
     
+        // Generate WhatsApp URL
+        $statusText = $formData->status_izin === 'approved' ? 'Diterima' : 'Ditolak';
+        $phoneNumber = $request->phone_number; // Assuming phone_number is available in the LeaveRequest model
+        $namaMahasiswa = $request->nama_mahasiswa; // Assuming nama_mahasiswa is available in the LeaveRequest model
+
+        if ($phoneNumber) {
+            // Remove any non-numeric characters from the phone number
+            $phoneNumber = preg_replace('/[^0-9]/', '', $phoneNumber);
+            // Prepend '62' if the number starts with '0' (Indonesian format)
+            if (substr($phoneNumber, 0, 1) === '0') {
+                $phoneNumber = '62' . substr($phoneNumber, 1);
+            }
+
+            $message = urlencode("Hasil Pengajuan Izin a/n \"{$namaMahasiswa}\"\nIzin kamu *{$statusText}*");
+            $whatsappUrl = "https://wa.me/{$phoneNumber}?text={$message}";
+            session()->flash('whatsapp_url', $whatsappUrl);
+        }
+    
         return redirect()->route('requests.index')->with('success', 'Status permintaan izin berhasil diperbarui.');
     }
 }
