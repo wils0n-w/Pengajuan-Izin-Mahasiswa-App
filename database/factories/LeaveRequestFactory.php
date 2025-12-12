@@ -19,6 +19,7 @@ class LeaveRequestFactory extends Factory
         return [
             'nama_mahasiswa' => $this->faker->name(),
             'nim' => $this->faker->unique()->numerify('##########'),
+            'phone_number' => '082162739975',
             'nama_izin' => $this->faker->randomElement(['Sakit', 'Izin', 'Lainnya']),
             'tanggal_awal_izin' => $this->faker->dateTimeBetween('-1 week', '+1 week'),
             'tanggal_akhir_izin' => $this->faker->dateTimeBetween('+1 week', '+2 weeks'),

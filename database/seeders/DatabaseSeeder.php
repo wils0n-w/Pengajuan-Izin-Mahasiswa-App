@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call(AdminUserSeeder::class);
-        \App\Models\LeaveRequest::factory(10)->create();
+        \App\Models\LeaveRequest::factory(5)->create();
 
         \App\Models\LeaveRequest::create([
             'nama_mahasiswa' => 'Wilson Winata',
